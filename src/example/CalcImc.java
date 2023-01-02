@@ -1,13 +1,12 @@
 package example;
 
+import java.text.NumberFormat;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class CalcImc {
-	
-	static String result = null;
 	
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger("");
@@ -17,22 +16,22 @@ public class CalcImc {
 		float height = 0;
 		double imc = 0;
 		
-		final Pattern textPattern = Pattern.compile("[m, f]");
-		logger.info("Enter male[m] or female[f].");
+		Pattern textPattern = Pattern.compile("[M, F]");
+		logger.info("Enter male[M] or female[F].");
 		if (scanner.hasNext(textPattern)) {
 			sex = scanner.next();
 		} else {
-			logger.warning("Only letter 'm'[male] or 'f'[female].");
+			logger.warning("Only letter 'M'[male] or 'F'[female].");
 			scanner.close();
 			return;
 		}
 		
-		final Pattern numberPattern = Pattern.compile("\\d*\\.?\\d*");
+		Pattern numberPattern = Pattern.compile("\\d*\\.?\\d*");
 		logger.info("Enter weight[Kilograms], ex.: 68.2");
 		if (scanner.hasNext(numberPattern)) {
 			weight = Float.parseFloat(scanner.next());
 		} else {
-			logger.warning("Only weight value[Kilogram].");
+			logger.warning("Only weight value[numeric].");
 			scanner.close();
 			return;
 		}
@@ -40,7 +39,7 @@ public class CalcImc {
 		if (scanner.hasNext(numberPattern)) {
 			height = Float.parseFloat(scanner.next());
 		} else {
-			logger.warning("Only height value[meter].");
+			logger.warning("Only height value[numeric].");
 			scanner.close();
 			return;
 		}
@@ -51,54 +50,57 @@ public class CalcImc {
 			imc = 0;
 		}
 		
+		String result;
 		switch (sex) {
-			case "m":
-				CalcImc.result = maleImc(imc);
-				break;
-			case "f":
-				CalcImc.result = femaleImc(imc);
-				break;
-			default:
-				CalcImc.result = null;
-				break;
+		case "M":
+			result = maleImc(imc);
+			break;
+		case "F":
+			result = femaleImc(imc);
+			break;
+		default:
+			result = "-- ? --";
+			break;
 		}
 		
 		String msg = String.format("IMC [{0}]: %s", result);
-		logger.log(Level.INFO, msg, imc);
+		NumberFormat nf = NumberFormat.getNumberInstance();
+		nf.setMaximumFractionDigits(1);
+		logger.log(Level.INFO, msg, nf.format(imc));
 		scanner.close();
 		
 	}
 	
 	private static String femaleImc(double imc) {
-		String text = null;
+		String info = null;
 		if (imc < 19.1) {
-			text = "under weight.";
+			info = "under weight.";
 		} else if (imc > 19.2 && imc < 25.8) {
-			text = "at ideal weight.";
+			info = "at ideal weight.";
 		} else if (imc > 25.9 && imc < 27.3) {
-			text = "a little overweight.";
+			info = "a little overweight.";
 		} else if (imc > 27.4 && imc < 32.3) {
-			text = "over ideal weight.";
+			info = "over ideal weight.";
 		} else {
-			text = "obesity.";
+			info = "obesity.";
 		}
-		return text;
+		return info;
 	}
 	
 	public static String maleImc(double imc) {
-		String text = null;
+		String info = null;
 		if (imc < 20.7) {
-			text = "under weight.";
+			info = "under weight.";
 		} else if (imc > 20.8 && imc < 26.4) {
-			text = "at ideal weight.";
+			info = "at ideal weight.";
 		} else if (imc > 26.5 && imc < 27.8) {
-			text = "a little overweight.";
+			info = "a little overweight.";
 		} else if (imc > 27.9 && imc < 31.1) {
-			text = "over ideal weight.";
+			info = "over ideal weight.";
 		} else {
-			text = "obesity.";
+			info = "obesity.";
 		}
-		return text;
+		return info;
 	}
 	
 }

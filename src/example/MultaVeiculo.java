@@ -8,71 +8,63 @@ import java.util.regex.Pattern;
 public class MultaVeiculo {
 	
 	public static void main(String[] args) {
-		
 		Logger logger = Logger.getLogger("");
+		Character vehicle = 0;
+		float speed = 0;
+		float maxSpeed = 0;
 		
 		try (Scanner scanner = new Scanner(System.in)) {
-			Character vehicle = 0;
-			float instantSpeed = 0;
-			float maxSpeedAlert = 0;
-			float maxSpeedAttention = 0;
 			
-			final Pattern textPattern = Pattern.compile("[A, B]");
-			logger.info("Enter car[A] or truck[B].");
+			Pattern textPattern = Pattern.compile("[A, B]");
+			logger.info("Enter car[A] or truck[B]?");
 			if (scanner.hasNext(textPattern)) {
 				vehicle = scanner.next().charAt(0);
 			} else {
-				logger.warning("Only letter 'A'[car] or 'B'[truck].");
+				logger.warning("Only letter 'A'[car] or 'B'[truck]!");
 				return;
 			}
 			
-			final Pattern numberPattern = Pattern.compile("\\d*\\.?\\d*");
-			logger.info("Enter with speed[km/h].");
+			Pattern numberPattern = Pattern.compile("\\d*\\.?\\d*");
+			logger.info("Enter with speed[km/h]?");
 			if (scanner.hasNext(numberPattern)) {
-				instantSpeed = Float.parseFloat(scanner.next());
+				speed = Float.parseFloat(scanner.next());
 			} else {
-				logger.warning("Only speed value[km/h].");
+				logger.warning("Only speed value[numeric, ex.: 95.6]!");
 				return;
 			}
+			
+			String result;
 			switch (vehicle) {
-				case 'A': // car, max.: 10%
-					maxSpeedAlert = 100;
-					maxSpeedAttention = (float) (maxSpeedAlert * 1.1);
-					checkSpeed(logger, instantSpeed, maxSpeedAlert,
-							maxSpeedAttention);
-					break;
-				
-				case 'B': // truck, max.: 5%
-					maxSpeedAlert = 90;
-					maxSpeedAttention = (float) (maxSpeedAlert * 1.05);
-					checkSpeed(logger, instantSpeed, maxSpeedAlert,
-							maxSpeedAttention);
-					break;
-				
-				default:
-					break;
+			case 'A': // car, tolerance max.: 10%
+				maxSpeed = 100;
+				result = check(speed, maxSpeed, (float) (maxSpeed * 1.1));
+				break;
+			case 'B': // truck, tolerance max.: 5%
+				maxSpeed = 90;
+				result = check(speed, maxSpeed, (float) (maxSpeed * 1.05));
+				break;
+			default:
+				result = "-- ? --";
+				break;
 			}
+			
+			logger.log(Level.INFO, result, maxSpeed);
 		}
 	}
 	
-	private static void checkSpeed(Logger logger, float instantSpeed,
-			float maxSpeedAlert, float maxSpeedAttention) {
-		if (instantSpeed <= maxSpeedAlert) {
-			String msgInfo = String.format(
-					"Information![%.2f], maximum speed permitted, {0}km/h",
-					instantSpeed);
-			logger.log(Level.INFO, msgInfo, maxSpeedAlert);
-		} else if (instantSpeed <= maxSpeedAttention) {
-			String msgAlert = String.format(
-					"Alert![%.2f] vehicle above the permitted speed, {0}km/h",
-					instantSpeed);
-			logger.log(Level.INFO, msgAlert, maxSpeedAlert);
+	private static String check(float speed, float maxSpeed, float tolerance) {
+		String info = null;
+		if (speed <= maxSpeed) {
+			info = String.format(
+					"Information![%.1f], max speed permitted, {0}km/h", speed);
+		} else if (speed <= tolerance) {
+			info = String.format(
+					"Alert![%.1f] above the permitted speed, {0}km/h", speed);
 		} else {
-			String msgAttention = String.format(
-					"Attention![%.2f] vehicle exceeded the speed limit, registered infraction, speed above {0}km/h",
-					instantSpeed);
-			logger.log(Level.INFO, msgAttention, maxSpeedAttention);
+			info = String.format(
+					"Infraction[%.1f] speed limit exceeded, {0}km/h", speed);
 		}
+		return info;
 	}
 	
 }
