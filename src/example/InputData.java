@@ -12,32 +12,35 @@ import java.util.logging.Logger;
 
 public class InputData {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(System.in));
 		Logger logger = Logger.getLogger("");
 		String name = null;
 		int age = 0;
-		short weight = 0;
+		float weight = 0;
 		char[] password;
 		
-		name = reader.readLine();
-		age = Integer.parseInt(reader.readLine());
-		weight = Short.parseShort(reader.readLine());
+		try {
+			name = reader.readLine().trim();
+			age = Integer.parseInt(reader.readLine().trim());
+			weight = Float.parseFloat(reader.readLine().trim());
+			logger.log(Level.INFO, "Name1: {0}", name);
+			logger.log(Level.INFO, "Age1: {0}", age);
+			logger.log(Level.INFO, "Weight1: {0}", weight);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		
-		logger.log(Level.INFO, "Name1: {0}", name);
-		logger.log(Level.INFO, "Age1: {0}", age);
-		logger.log(Level.INFO, "Weight1: {0}", weight);
-		
-		Scanner scanner = new Scanner(System.in);
-		name = scanner.nextLine();
-		age = scanner.nextInt();
-		weight = scanner.nextShort();
-		logger.log(Level.INFO, "Name2: {0}", name);
-		logger.log(Level.INFO, "Age2: {0}", age);
-		logger.log(Level.INFO, "Weight2: {0}", weight);
-		scanner.close();
+		try (Scanner scanner = new Scanner(System.in)) {
+			name = scanner.nextLine();
+			age = scanner.nextInt();
+			weight = Float.parseFloat(scanner.next().trim());
+			logger.log(Level.INFO, "Name2: {0}", name);
+			logger.log(Level.INFO, "Age2: {0}", age);
+			logger.log(Level.INFO, "Weight2: {0}", weight);
+		}
 		
 		Console console = System.console();
 		if (console != null) {
