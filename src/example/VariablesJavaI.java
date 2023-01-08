@@ -2,7 +2,7 @@ package example;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.logging.Level;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class VariablesJavaI {
@@ -18,7 +18,7 @@ public class VariablesJavaI {
 		Year birthYear = Year.now().minusYears(age);
 		boolean isAlive = true;
 		
-		ArrayList<Object> person = new ArrayList<>();
+		List<Object> person = new ArrayList<>();
 		person.add(name);
 		person.add(gener);
 		person.add(age);
@@ -28,7 +28,7 @@ public class VariablesJavaI {
 		person.add(isAlive);
 		
 		Logger logger = Logger.getLogger("");
-		logger.log(Level.INFO, "Person: {0}", person);
+		logger.info(person::toString);
 		
 	}
 	
