@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 public class InputData {
 	
 	public static void main(String[] args) {
-		
+		Logger logger = Logger.getLogger("");
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(System.in));
-		Logger logger = Logger.getLogger("");
 		String name = null;
 		int age = 0;
 		float weight = 0;

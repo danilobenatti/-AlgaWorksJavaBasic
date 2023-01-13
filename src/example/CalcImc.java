@@ -11,15 +11,15 @@ public class CalcImc {
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger("");
 		Scanner scanner = new Scanner(System.in);
-		String sex = null;
+		char sex;
 		float weight = 0;
 		float height = 0;
 		double imc = 0;
 		
-		Pattern textPattern = Pattern.compile("[M, F]");
+		Pattern textPattern = Pattern.compile("[mM, fF]");
 		logger.info("Enter male[M] or female[F].");
 		if (scanner.hasNext(textPattern)) {
-			sex = scanner.next();
+			sex = scanner.next().charAt(0);
 		} else {
 			logger.warning("Only letter 'M'[male] or 'F'[female].");
 			scanner.close();
@@ -52,20 +52,22 @@ public class CalcImc {
 		
 		String result;
 		switch (sex) {
-		case "M":
-			result = maleImc(imc);
-			break;
-		case "F":
-			result = femaleImc(imc);
-			break;
-		default:
-			result = "-- ? --";
-			break;
+			case 'm':
+			case 'M':
+				result = maleImc(imc);
+				break;
+			case 'f':
+			case 'F':
+				result = femaleImc(imc);
+				break;
+			default:
+				result = "-- ? --";
+				break;
 		}
 		
-		String msg = String.format("IMC [{0}]: %s", result);
+		String msg = String.format("IMC[{0}]: %s", result);
 		NumberFormat nf = NumberFormat.getNumberInstance();
-		nf.setMaximumFractionDigits(1);
+		nf.setMaximumFractionDigits(2);
 		logger.log(Level.INFO, msg, nf.format(imc));
 		scanner.close();
 		

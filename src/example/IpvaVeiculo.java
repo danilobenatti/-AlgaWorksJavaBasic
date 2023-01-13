@@ -30,29 +30,29 @@ public class IpvaVeiculo {
 			String year = dateFormat.format(new Date());
 			
 			switch (number) {
-			case '1':
-			case '2':
-				info = String.format("Final date 13/02/%s", year);
-				break;
-			case '3':
-			case '4':
-				info = String.format("Final date 14/02/%s", year);
-				break;
-			case '5':
-			case '6':
-				info = String.format("Final date 15/02/%s", year);
-				break;
-			case '7':
-			case '8':
-				info = String.format("Final date 16/02/%s", year);
-				break;
-			case '9':
-			case '0':
-				info = String.format("Final date 17/02/%s", year);
-				break;
-			default:
-				info = "-- ? --";
-				break;
+				case '1':
+				case '2':
+					info = String.format("Final date 13/02/%s", year);
+					break;
+				case '3':
+				case '4':
+					info = String.format("Final date 14/02/%s", year);
+					break;
+				case '5':
+				case '6':
+					info = String.format("Final date 15/02/%s", year);
+					break;
+				case '7':
+				case '8':
+					info = String.format("Final date 16/02/%s", year);
+					break;
+				case '9':
+				case '0':
+					info = String.format("Final date 17/02/%s", year);
+					break;
+				default:
+					info = "-- ? --";
+					break;
 			}
 			logger.log(Level.INFO, info);
 		}

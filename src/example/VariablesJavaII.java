@@ -22,7 +22,7 @@ public class VariablesJavaII {
 		logger.log(Level.INFO, "short value -> {0}", shortValue);
 		logger.log(Level.INFO, "{0}", Double.sum(longValue, shortValue));
 		logger.log(Level.INFO, "{0}", Double.sum(longValue, weight));
-		logger.log(Level.INFO, "{0}", Double.sum(weight, shortValue));
+		logger.log(Level.INFO, "{0}", Double.sum(height, shortValue));
 		
 	}
 	

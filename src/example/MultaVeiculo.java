@@ -15,7 +15,7 @@ public class MultaVeiculo {
 		
 		try (Scanner scanner = new Scanner(System.in)) {
 			
-			Pattern textPattern = Pattern.compile("[A, B]");
+			Pattern textPattern = Pattern.compile("[aA, bB]");
 			logger.info("Enter car[A] or truck[B]?");
 			if (scanner.hasNext(textPattern)) {
 				vehicle = scanner.next().charAt(0);
@@ -35,17 +35,17 @@ public class MultaVeiculo {
 			
 			String result;
 			switch (vehicle) {
-			case 'A': // car, tolerance max.: 10%
-				maxSpeed = 100;
-				result = check(speed, maxSpeed, (float) (maxSpeed * 1.1));
-				break;
-			case 'B': // truck, tolerance max.: 5%
-				maxSpeed = 90;
-				result = check(speed, maxSpeed, (float) (maxSpeed * 1.05));
-				break;
-			default:
-				result = "-- ? --";
-				break;
+				case 'A': // car, tolerance max.: 10%
+					maxSpeed = 100;
+					result = check(speed, maxSpeed, (float) (maxSpeed * 1.1));
+					break;
+				case 'B': // truck, tolerance max.: 5%
+					maxSpeed = 90;
+					result = check(speed, maxSpeed, (float) (maxSpeed * 1.05));
+					break;
+				default:
+					result = "-- ? --";
+					break;
 			}
 			
 			logger.log(Level.INFO, result, maxSpeed);

@@ -49,7 +49,7 @@ public class WhileStruct1 {
 		return list;
 	}
 	
-	static ArrayList<Integer> arrayNumbers(int number, int finalNumber) {
+	protected static ArrayList<Integer> arrayNumbers(int number, int finalNumber) {
 		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i <= finalNumber - number; i++) {
 			list.add(number + i);
