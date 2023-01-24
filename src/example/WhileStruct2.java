@@ -1,5 +1,6 @@
 package example;
 
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,10 +11,9 @@ public class WhileStruct2 {
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger("");
 		
-		int number = 0;
-		int finalNumber = 0;
-		
 		try (Scanner scanner = new Scanner(System.in)) {
+			int number = 0;
+			int finalNumber = 0;
 			logger.info("Enter (+/-) initial number.");
 			Pattern pattern = Pattern.compile("-?\\d*");
 			if (scanner.hasNext(pattern)) {
@@ -33,11 +33,20 @@ public class WhileStruct2 {
 				logger.log(Level.WARNING, "Only integers [3, 4, 5...]!");
 				return;
 			}
-			logger.log(Level.INFO, "Result: {0}",
+			logger.log(Level.INFO, "Result1: {0}",
 					WhileStruct1.listNumbers(number, finalNumber));
-			logger.log(Level.INFO, "Result: {0}",
+			logger.log(Level.INFO, "Result2: {0}",
 					WhileStruct1.arrayNumbers(number, finalNumber));
+			
+			Integer[] numbers = { 15, 4, 1, 5, 4, 3, 2, 3, 7, 9, 8, 10, 6, 0 };
+			logger.log(Level.INFO, "Result3: {0}", WhileStruct1
+					.hashNumbers(numbers, Comparator.naturalOrder()));
+			logger.log(Level.INFO, "Result4: {0}", WhileStruct1
+					.hashNumbers(numbers, Comparator.comparing(i -> i)));
+			logger.log(Level.INFO, "Result5: {0}", WhileStruct1
+					.hashNumbers(numbers, Comparator.reverseOrder()));
 		}
+		
 	}
 	
 }

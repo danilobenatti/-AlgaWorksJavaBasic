@@ -1,6 +1,10 @@
 package example;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -49,13 +53,24 @@ public class WhileStruct1 {
 		return list;
 	}
 	
-	protected static ArrayList<Integer> arrayNumbers(int number, int finalNumber) {
+	protected static ArrayList<Integer> arrayNumbers(int number,
+			int finalNumber) {
 		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i <= finalNumber - number; i++) {
 			list.add(number + i);
-			if (number + i == 0)
+			if (number < 0 && number + i == 0)
 				break;
 		}
 		return list;
 	}
+	
+	protected static HashSet<Integer> hashNumbers(Integer[] numbers,
+			Comparator<Integer> comparator) {
+		HashSet<Integer> set = new HashSet<>();
+		Collections.addAll(set, numbers);
+		List<Integer> list = new ArrayList<>(set);
+		Collections.sort(list, comparator);
+		return new LinkedHashSet<>(list);
+	}
+	
 }

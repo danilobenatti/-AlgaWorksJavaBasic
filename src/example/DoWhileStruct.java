@@ -3,6 +3,9 @@ package example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +32,20 @@ public class DoWhileStruct {
 		
 		logger.info(sum::toString);
 		logger.log(Level.INFO, "{0}", average);
+		
+		try (Scanner scanner = new Scanner(System.in)) {
+			boolean doIt = true;
+			List<Object> object = new ArrayList<>();
+			do {
+				logger.info("Inform something[press '0' for finish!]:");
+				if (!scanner.hasNext("[0]")) {
+					object.add(scanner.next());
+				} else {
+					doIt = false;
+				}
+			} while (doIt);
+			logger.log(Level.INFO, "{0}", object);
+		}
 		
 	}
 	

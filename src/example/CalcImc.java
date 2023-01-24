@@ -11,11 +11,8 @@ public class CalcImc {
 	public static void main(String[] args) {
 		Logger logger = Logger.getLogger("");
 		Scanner scanner = new Scanner(System.in);
-		char sex;
-		float weight = 0;
-		float height = 0;
-		double imc = 0;
 		
+		char sex;
 		Pattern textPattern = Pattern.compile("[mM, fF]");
 		logger.info("Enter male[M] or female[F].");
 		if (scanner.hasNext(textPattern)) {
@@ -26,6 +23,8 @@ public class CalcImc {
 			return;
 		}
 		
+		float weight = 0;
+		float height = 0;
 		Pattern numberPattern = Pattern.compile("\\d*\\.?\\d*");
 		logger.info("Enter weight[Kilograms], ex.: 68.2");
 		if (scanner.hasNext(numberPattern)) {
@@ -44,33 +43,24 @@ public class CalcImc {
 			return;
 		}
 		
+		double imc = 0;
 		if (weight > 0 && height > 0) {
 			imc = weight / Math.pow(height, 2);
 		} else {
 			imc = 0;
 		}
 		
-		String result;
-		switch (sex) {
-			case 'm':
-			case 'M':
-				result = maleImc(imc);
-				break;
-			case 'f':
-			case 'F':
-				result = femaleImc(imc);
-				break;
-			default:
-				result = "-- ? --";
-				break;
-		}
+		String result = switch (sex) {
+			case 'm', 'M' -> maleImc(imc);
+			case 'f', 'F' -> femaleImc(imc);
+			default -> "-- ? --";
+		};
 		
 		String msg = String.format("IMC[{0}]: %s", result);
 		NumberFormat nf = NumberFormat.getNumberInstance();
 		nf.setMaximumFractionDigits(2);
 		logger.log(Level.INFO, msg, nf.format(imc));
 		scanner.close();
-		
 	}
 	
 	private static String femaleImc(double imc) {
